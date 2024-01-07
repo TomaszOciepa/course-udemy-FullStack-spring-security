@@ -1,5 +1,6 @@
 package com.example.coursespringsecurity;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -10,8 +11,15 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@RequiredArgsConstructor
 public class ConfigSecurity {
 
+    private final UserEntityRepository userEntityRepository;
+    
+    @Bean
+    public UserEntityUserDetailsService userDetailsService(){
+        return new UserEntityUserDetailsService(userEntityRepository);
+    }
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests(response -> {
