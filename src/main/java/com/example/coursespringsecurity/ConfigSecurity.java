@@ -12,8 +12,9 @@ public class ConfigSecurity {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> {
-            authorizationManagerRequestMatcherRegistry.anyRequest().authenticated();
+        return http.authorizeHttpRequests(response -> {
+            response.requestMatchers("/login").permitAll();
+            response.anyRequest().authenticated();
         }).build();
     }
 }
